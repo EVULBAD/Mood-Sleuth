@@ -53,6 +53,9 @@ def home():
             # Load the CSV file into a pandas DataFrame.
             df = pd.read_csv(file_path)
 
+            # Remove exact duplicate reviews.
+            df = df.drop_duplicates(subset=['Reviews'])
+
             # Perform EDA.
             summary = df.describe()
             summary = summary.drop(['top', 'freq', 'unique'])
