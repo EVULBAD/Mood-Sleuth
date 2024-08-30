@@ -15,15 +15,13 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+# Helper function to create a unique filename if the file already exists in the directory.
 def get_unique_filename(filepath):
-    """
-    Helper function to create a unique filename if the file already exists in the directory.
-    """
-    # Split the file path into base and extension
+    # Split the file path into base and extension.
     base, extension = os.path.splitext(filepath)
     counter = 1
 
-    # Check if file exists, and append a number to the base if it does
+    # Check if file exists, and append a number to the base if it does.
     while os.path.exists(filepath):
         filepath = f"{base}_{counter}{extension}"
         counter += 1
@@ -61,11 +59,11 @@ def home():
             summary = summary.drop(['top', 'freq', 'unique'])
 
             # Convert missing values Series to DataFrame.
-            missing_values = df.isnull().sum().reset_index()
-            missing_values.columns = ['Column', 'Missing Values']
+            #testing missing_values = df.isnull().sum().reset_index()
+            #testing missing_values.columns = ['Column', 'Missing Values']
 
             # Render the EDA results template.
-            return render_template('results.html', summary=summary.to_html(), missing_values=missing_values.to_html())
+            return render_template('results.html', summary=summary.to_html())
         else:
             return "File invalid. Please only upload csv."
     return render_template('index.html')
