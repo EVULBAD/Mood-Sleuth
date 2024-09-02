@@ -11,7 +11,6 @@ from nltk.tokenize import word_tokenize
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report, accuracy_score
 
 # Initializations for preprocessing.
@@ -19,7 +18,7 @@ stop_words = set(stopwords.words("english"))
 lemmatizer = WordNetLemmatizer()
 
 # Preprocessing function.
-def preprocess_text(text):
+def preprocess(text):
     # Lowercase.
     text = text.lower()
     # Remove punctuation.
@@ -40,26 +39,48 @@ def preprocess_text(text):
     # Return.
     return processed_text
 
+
+# Function to determine sentiment.
+def rating_to_sentiment(rating):
+    if rating == 1:
+        return "negative"
+    elif rating == 2:
+        return 'mostly negative'
+    elif rating == 3:
+        return 'neutral'
+    elif rating == 4:
+        return 'mostly postive'
+    elif rating == 5:
+        return 'postive'
+
+print('Reading and preprocessing training data...')
+
 # Read and preprocess data.
 # Training dataframe.
-reviews_1 = pd.read_csv("./training/train/reviews_amazon_labelled.csv")
-reviews_2 = pd.read_csv("./training/train/reviews_restaurants_labelled.csv")
+reviews_1 = pd.read_csv("./training/train/reviews_disneyland_balanced.csv")
+reviews_2 = pd.read_csv("./training/train/reviews_tripadvisor_balanced.csv")
 training_df = pd.concat([reviews_1, reviews_2], ignore_index=True)
-training_df = training_df.iloc[5000:]
-training_df['Preprocessed'] = training_df['Review'].apply(preprocess_text)
+training_df['Preprocessed'] = training_df['Review'].apply(preprocess)
+
+print('Training data processed.')
+print()
+print('Reading and preprocessing testing data...')
 
 # Testing dataframe.
-reviews_3 = pd.read_csv("./training/test/reviews_hotels_labelled.csv")
-reviews_4 = pd.read_csv("./training/test/reviews_mcdonalds_labelled.csv")
+reviews_3 = pd.read_csv("./training/test/reviews_mcdonalds_balanced.csv")
+reviews_4 = pd.read_csv("./training/test/reviews_amazonfood_balanced.csv")
 testing_df = pd.concat([reviews_3, reviews_4], ignore_index=True)
-testing_df = testing_df.iloc[5000:]
-testing_df['Preprocessed'] = testing_df['Review'].apply(preprocess_text)
+testing_df['Preprocessed'] = testing_df['Review'].apply(preprocess)
+
+print('Testing data processed.')
+print()
+print('Training in progress...')
 
 # Initializations for training.
-model = LogisticRegression(max_iter=200)
+model = LogisticRegression(max_iter=1000)
 X = training_df['Preprocessed']
-y = training_df['Sentiment']
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42, test_size=0.1, stratify=y)
+y = training_df['Rating']
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42, stratify=y)
 
 # Vectorize.
 vectorizer = CountVectorizer()
@@ -69,21 +90,30 @@ X_test_vec = vectorizer.transform(X_test)
 # Train.
 model.fit(X_train_vec, y_train)
 
+print('Training complete.')
+print()
+
 # Evaluate.
 y_pred = model.predict(X_test_vec)
 features_nd = X_test_vec.toarray()
 
-print(training_df['Sentiment'].value_counts())
-print(testing_df['Sentiment'].value_counts())
+print('Training value counts:')
+print(training_df['Rating'].value_counts())
+print()
+print('Testing value counts:')
+print(testing_df['Rating'].value_counts())
 print()
 
+# Map indices from X_test to the corresponding testing_df indices
+test_indices = X_test.index.tolist()
+
 for i in range(10):
-    idx = random.randint(0, len(X_test) - 1)
+    idx = random.choice(test_indices)
     print(f"Review: {testing_df['Review'].iloc[idx]}")
     print(f"Preprocessed: {testing_df['Preprocessed'].iloc[idx]}")
-    print(f"Predicted Sentiment: {y_pred[idx]}")
-    print(f"Actual Sentiment: {testing_df['Sentiment'].iloc[idx]}")
+    print(f"Predicted Rating: {y_pred[test_indices.index(idx)]}")
+    print(f"Actual Rating: {testing_df['Rating'].iloc[idx]}")
     print()
 
 print("Accuracy:", accuracy_score(y_test, y_pred))
-print("Classification Report:\n", classification_report(y_test, y_pred, labels=[0, 2], target_names=['Negative', 'Positive']))
+print("Classification Report:\n", classification_report(y_test, y_pred, target_names=['Negative', 'Mostly Negative', 'Neutral', 'Mostly Positive', 'Positive']))
