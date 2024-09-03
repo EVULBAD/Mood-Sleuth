@@ -67,7 +67,7 @@ def home():
                 example_positive_review = df[df['Rating'] == 5].sample(1)['Review'].values[0] if not df[df['Rating'] == 5].empty else "No positive reviews found."
                 example_negative_review = df[df['Rating'] == 1].sample(1)['Review'].values[0] if not df[df['Rating'] == 1].empty else "No negative reviews found."
                 # Prepare CSV for download.
-                predictions_csv = df[['Review', 'Rating']].to_csv(index=False)
+                sentiment_analysis_report = df[['Review', 'Rating']].to_csv(index=False)
             else:
                 return "File invalid. Please only upload csv."
         elif 'text_input' in request.form:
@@ -86,7 +86,7 @@ def home():
             avg_sentiment = avg_sentiment,
             example_positive_review = example_positive_review,
             example_negative_review = example_negative_review,
-            predictions_csv = predictions_csv
+            sentiment_analysis_report = sentiment_analysis_report
         )
 
     return render_template('index.html')
@@ -94,7 +94,7 @@ def home():
 @app.route('/download_predictions', methods=['POST'])
 def download_predictions():
     # Retrieve the CSV content from the form.
-    csv_content = request.form.get('predictions_csv')
+    csv_content = request.form.get('sentiment_analysis_report')
 
     # Prepare the CSV file for download.
     output = BytesIO()
@@ -104,7 +104,7 @@ def download_predictions():
     return send_file(
         output,
         as_attachment=True,
-        download_name='predictions.csv',
+        download_name='sentiment_analysis_report.csv',
         mimetype='text/csv'
     )
 
