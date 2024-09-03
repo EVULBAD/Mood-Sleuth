@@ -31,7 +31,7 @@ def get_unique_filename(filepath):
 
     # Check if file exists, and append a number to the base if it does.
     while os.path.exists(filepath):
-        filepath = f"{base}_{counter}{extension}"
+        filepath = f'{base}_{counter}{extension}'
         counter += 1
 
     return filepath
@@ -48,28 +48,27 @@ def home():
             if file and allowed_file(file.filename):
                 filename = file.filename
                 file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                # Check for existing files and create a unique filename.
                 file_path = get_unique_filename(file_path)
-                # Save the file with the unique filename.
                 file.save(file_path)
-                # Load the CSV file into a pandas DataFrame.
                 df = pd.read_csv(file_path)
-                # Remove exact duplicate reviews.
                 df = df.drop_duplicates(subset=['Review'])
-                # Perform sentiment analysis on reviews.
+                
+                # Perform sentiment analysis.
                 df['Preprocessed'] = df['Review'].apply(preprocess)
                 X_vec = vectorizer.transform(df['Preprocessed'])
                 df['Rating'] = logreg_model.predict(X_vec)
-                # Calculate mean predicted rating.
                 mean_predicted_rating = df['Rating'].mean()
                 avg_sentiment = rating_to_sentiment(round(mean_predicted_rating))
-                # Select one review rated 5 and one review rated 1.
-                example_positive_review = df[df['Rating'] == 5].sample(1)['Review'].values[0] if not df[df['Rating'] == 5].empty else "No positive reviews found."
-                example_negative_review = df[df['Rating'] == 1].sample(1)['Review'].values[0] if not df[df['Rating'] == 1].empty else "No negative reviews found."
+                example_positive_review = df[df['Rating'] == 5].sample(1)['Review'].values[0] if not df[df['Rating'] == 5].empty else 'No positive reviews found.'
+                example_negative_review = df[df['Rating'] == 1].sample(1)['Review'].values[0] if not df[df['Rating'] == 1].empty else 'No negative reviews found.'
+                
                 # Prepare CSV for download.
                 sentiment_analysis_report = df[['Review', 'Rating']].to_csv(index=False)
+
+                # Delete file after analysis.
+                os.remove(file_path)
             else:
-                return "File invalid. Please only upload csv."
+                return 'File invalid. Please only upload csv.'
         elif 'text_input' in request.form:
             # Text input handling.
             input_text = request.form['text_input']

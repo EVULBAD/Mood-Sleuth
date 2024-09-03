@@ -1,0 +1,135 @@
+* {
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+html, body, div, span, h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+.title {
+    margin-bottom: 1rem;
+}
+
+h1, h2, h3, h4 {
+    text-transform: uppercase;
+    letter-spacing: 0.3rem;
+}
+
+h1 {
+    font-size: 2.25rem;
+}
+
+#wrapper {
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-flex-direction: column;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -moz-align-items: center;
+    -webkit-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+    -moz-justify-content: space-between;
+    -webkit-justify-content: space-between;
+    -ms-justify-content: space-between;
+    justify-content: space-between;
+    position: relative;
+    min-height: 100vh;
+    padding: 4rem 2rem;
+    z-index: 3;
+}
+
+#wrapper:before, #wrapper:after {
+    content: '';
+    display: block;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100%;
+    text-align: center;
+    display: flex;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    flex-direction: column;
+    -moz-flex-direction: column;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    align-items: center;
+    -moz-align-items: center;
+    -webkit-align-items: center;
+    -ms-align-items: center;
+    transition: transform 0.325s ease-in-out, filter 0.325s ease-in-out, opacity 0.325s ease-in-out;
+    -moz-transition: -moz-transform 0.325s ease-in-out, -moz-filter 0.325s ease-in-out, opacity 0.325s ease-in-out;
+    -webkit-transition: -webkit-transform 0.325s ease-in-out, -webkit-filter 0.325s ease-in-out, opacity 0.325s ease-in-out;
+    -ms-transition: -ms-transform 0.325s ease-in-out, -ms-filter 0.325s ease-in-out, opacity 0.325s ease-in-out;
+    max-width: 100%;
+    text-align: center;
+}
+
+header .content {
+    border: solid 1px red;
+    max-width: 100%;
+}
+
+header .inner {
+    padding: 3rem 10rem
+}
+
+form {
+    margin-bottom: 2rem;
+}
+
+form.bottom {
+    margin-bottom: 0!important;
+}
+
+input {
+    font-size: 1rem;
+}
+
+textarea {
+    height: 5rem;
+    resize: none;
+    display: block;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    max-width: 100%;
+}
+
+.inner p {
+    margin-bottom: 0.5rem;
+}
+
+footer {
+    position: absolute;
+    bottom: 0.5rem;
+    text-align: center;
+    width: 100%;
+    z-index: 999;
+}
+
+.results {
+    display: none;
+}
+
+/* MOBILE */
+@media screen and (max-width: 736px) {
+    header .content .inner {
+        padding: 2rem 1rem;
+    }
+}
