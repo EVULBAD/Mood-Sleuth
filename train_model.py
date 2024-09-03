@@ -3,8 +3,8 @@ import pandas as pd
 import string
 import re
 import random
+import joblib
 
-from Tools.scripts.objgraph import printundef
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
@@ -97,25 +97,26 @@ print()
 print('Training in progress...')
 
 # Initializations for training.
-model = LogisticRegression(max_iter=1000)
+logreg_model = LogisticRegression(max_iter=1000)
 X = training_df['Preprocessed']
 y = training_df['Rating']
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42, stratify=y)
 
 # Vectorize.
-vectorizer = TfidfVectorizer()
+vectorizer = TfidfVectorizer(ngram_range=(1, 2))
 X_train_vec = vectorizer.fit_transform(X_train)
 X_test_vec = vectorizer.transform(X_test)
 
 # Train.
-model.fit(X_train_vec, y_train)
+logreg_model.fit(X_train_vec, y_train)
 
 print('Training complete.')
 print()
 
 # Evaluate.
-y_pred = model.predict(X_test_vec)
+y_pred = logreg_model.predict(X_test_vec)
 features_nd = X_test_vec.toarray()
+test_indices = X_test.index.tolist()
 
 print('Training value counts:')
 print(training_df['Rating'].value_counts())
@@ -123,9 +124,6 @@ print()
 print('Testing value counts:')
 print(testing_df['Rating'].value_counts())
 print()
-
-# Map indices from X_test to the corresponding testing_df indices
-test_indices = X_test.index.tolist()
 
 for i in range(10):
     idx = random.choice(test_indices)
@@ -137,3 +135,7 @@ for i in range(10):
 
 print("Accuracy:", accuracy_score(y_test, y_pred))
 print("Classification Report:\n", classification_report(y_test, y_pred, target_names=['Negative', 'Mostly Negative', 'Neutral', 'Mostly Positive', 'Positive']))
+
+# Save model and vectorizer.
+joblib.dump(logreg_model, 'sentiment_model.joblib')
+joblib.dump(vectorizer, 'vectorizer.joblib')
