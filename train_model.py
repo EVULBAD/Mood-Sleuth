@@ -1,77 +1,14 @@
 # Imports.
 import pandas as pd
-import string
-import re
 import random
 import joblib
 
-from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
-from nltk.tokenize import word_tokenize
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import classification_report, accuracy_score
 
-# Initializations for preprocessing.
-stop_words = set(stopwords.words("english"))
-lemmatizer = WordNetLemmatizer()
-
-# Function to help handle negations.
-def handle_negations(tokens):
-    # Initialization.
-    negation_words = {"not", "no", "never", "n't"}
-    new_tokens = []
-    negation = False
-
-    # For each token, determine is word is being negated.
-    for token in tokens:
-        if token in negation_words:
-            negation = True
-        elif negation:
-            # Apply negation to the following words
-            new_tokens.append("NOT_" + token)
-            negation = False
-        else:
-            new_tokens.append(token)
-
-    return new_tokens
-
-# Function to preprocess text.
-def preprocess(text):
-    # Lowercase.
-    text = text.lower()
-    # Remove punctuation.
-    text = text.translate(str.maketrans('', '', string.punctuation))
-    # Remove numbers.
-    text = re.sub(r'\d+', '', text)
-    # Remove unwanted characters.
-    text = re.sub(r'[^\x00-\x7F]+', '', text)
-    text = ' '.join(text.split())
-    # Tokenize and ensure negations are handled.
-    tokens = word_tokenize(text)
-    tokens = handle_negations(tokens)
-    # Remove stopwords.
-    tokens = [word for word in tokens if word not in stop_words]
-    # Lemmatize and stem words.
-    lemmatized_words = [lemmatizer.lemmatize(word) for word in tokens]
-    # Join words back into a single string.
-    processed_text = ' '.join(lemmatized_words)
-    # Return.
-    return processed_text
-
-# Function to determine sentiment.
-def rating_to_sentiment(rating):
-    if rating == 1:
-        return "negative"
-    elif rating == 2:
-        return 'mostly negative'
-    elif rating == 3:
-        return 'neutral'
-    elif rating == 4:
-        return 'mostly positive'
-    elif rating == 5:
-        return 'positive'
+from sentiment_analysis import preprocess
 
 print('Reading and preprocessing training data...')
 
@@ -135,6 +72,44 @@ for i in range(10):
 
 print("Accuracy:", accuracy_score(y_test, y_pred))
 print("Classification Report:\n", classification_report(y_test, y_pred, target_names=['Negative', 'Mostly Negative', 'Neutral', 'Mostly Positive', 'Positive']))
+
+import seaborn as sns
+from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
+
+# Compute confusion matrix
+cm = confusion_matrix(y_test, y_pred)
+
+plt.figure(figsize=(10, 7))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=['1', '2', '3', '4', '5'], yticklabels=['1', '2', '3', '4', '5'])
+plt.xlabel('Predicted Ratings')
+plt.ylabel('Actual Ratings')
+plt.title('Confusion Matrix')
+plt.show()
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Compute errors
+errors = np.abs(y_pred - y_test)
+
+plt.figure(figsize=(10, 6))
+plt.scatter(range(len(errors)), errors, alpha=0.5)
+plt.yticks([0, 1, 2, 3, 4])
+plt.xlabel('Index')
+plt.ylabel('Absolute Error')
+plt.title('Prediction Errors')
+plt.grid(True)
+plt.show()
+
+plt.figure(figsize=(10, 6))
+plt.hist(errors, bins=range(1, 6), edgecolor='black')
+plt.xticks([1, 2, 3, 4, 5])
+plt.xlabel('Absolute Error')
+plt.ylabel('Frequency')
+plt.title('Histogram of Prediction Errors')
+plt.grid(True)
+plt.show()
 
 # Save model and vectorizer.
 joblib.dump(logreg_model, 'sentiment_model.joblib')

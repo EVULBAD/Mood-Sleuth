@@ -2,14 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sentiment Analysis</title>
 </head>
 <body>
-<h1>Welcome to the Sentiment Analysis App!</h1>
+<h1>Upload a CSV or Enter Text for Sentiment Analysis</h1>
+<!-- File Upload Form -->
 <form action="/" method="post" enctype="multipart/form-data">
     <input type="file" name="file">
     <input type="submit" value="Upload CSV">
+</form>
+
+<!-- Text Input Form -->
+<form action="/" method="post">
+    <input type="text" name="text_input" placeholder="Enter text for sentiment analysis">
+    <input type="submit" value="Analyze Text">
 </form>
 </body>
 </html>
