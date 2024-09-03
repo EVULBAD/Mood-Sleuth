@@ -3,8 +3,9 @@ import pandas as pd
 import os
 import joblib
 
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, send_file
 from sentiment_analysis import preprocess, rating_to_sentiment
+from io import BytesIO
 
 # Load the model and vectorizer
 logreg_model = joblib.load('sentiment_model.joblib')
@@ -58,26 +59,54 @@ def home():
                 # Perform sentiment analysis on reviews.
                 df['Preprocessed'] = df['Review'].apply(preprocess)
                 X_vec = vectorizer.transform(df['Preprocessed'])
-                df['Predicted Rating'] = logreg_model.predict(X_vec)
-                # Perform EDA
-                summary = df.describe()
-                # summary = summary.drop(['top', 'freq', 'unique'])
-                # Render the EDA results template with predictions.
-                return render_template('results.html', summary=summary.to_html(), predictions=df[['Review', 'Predicted Rating']].to_html())
-
+                df['Rating'] = logreg_model.predict(X_vec)
+                # Calculate mean predicted rating.
+                mean_predicted_rating = df['Rating'].mean()
+                avg_sentiment = rating_to_sentiment(round(mean_predicted_rating))
+                # Select one review rated 5 and one review rated 1.
+                example_positive_review = df[df['Rating'] == 5].sample(1)['Review'].values[0] if not df[df['Rating'] == 5].empty else "No positive reviews found."
+                example_negative_review = df[df['Rating'] == 1].sample(1)['Review'].values[0] if not df[df['Rating'] == 1].empty else "No negative reviews found."
+                # Prepare CSV for download.
+                predictions_csv = df[['Review', 'Rating']].to_csv(index=False)
             else:
                 return "File invalid. Please only upload csv."
         elif 'text_input' in request.form:
-            # Text input handling
+            # Text input handling.
             input_text = request.form['text_input']
             preprocessed_text = preprocess(input_text)
             input_vector = vectorizer.transform([preprocessed_text])
-            predicted_rating = logreg_model.predict(input_vector)[0]
+            predicted_rating_int = logreg_model.predict(input_vector)[0]
+            predicted_rating_text = rating_to_sentiment(predicted_rating_int)
 
-            # Render a template to show the result
-            return render_template('single_result.html', input_text=input_text, predicted_rating=predicted_rating)
+            # Render the result on the same page.
+            return render_template('index.html', input_text=input_text, predicted_rating_int=predicted_rating_int, predicted_rating_text=predicted_rating_text)
+
+        return render_template(
+            'index.html',
+            avg_sentiment = avg_sentiment,
+            example_positive_review = example_positive_review,
+            example_negative_review = example_negative_review,
+            predictions_csv = predictions_csv
+        )
 
     return render_template('index.html')
+
+@app.route('/download_predictions', methods=['POST'])
+def download_predictions():
+    # Retrieve the CSV content from the form.
+    csv_content = request.form.get('predictions_csv')
+
+    # Prepare the CSV file for download.
+    output = BytesIO()
+    output.write(csv_content.encode('utf-8'))
+    output.seek(0)
+
+    return send_file(
+        output,
+        as_attachment=True,
+        download_name='predictions.csv',
+        mimetype='text/csv'
+    )
 
 if __name__ == '__main__':
     app.run(debug=True)
