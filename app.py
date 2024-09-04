@@ -3,7 +3,7 @@ import pandas as pd
 import os
 import joblib
 
-from flask import Flask, render_template, request, redirect, url_for, send_file
+from flask import Flask, render_template, request, send_file
 from sentiment_analysis import preprocess, rating_to_sentiment
 from io import BytesIO
 

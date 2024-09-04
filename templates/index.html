@@ -1,49 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<!--
+	Dimension by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Sentiment Analysis</title>
+    <title>Mood Sleuth</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
 </head>
-<body>
-<h1>Sentiment Analysis</h1>
+<body class="is-preload">
 
-<!-- Display errors if any -->
-{% if error %}
-<p style="color: red;">{{ error }}</p>
-{% endif %}
+    <div class="pagecover"></div>
+    <div class="bgcover"></div>
+    <video autoplay muted loop id="videobg">
+        <source src="{{ url_for('static', filename='background.mp4') }}" type="video/mp4">
+    </video>
 
-<!-- File Upload Form -->
-<form action="/" method="post" enctype="multipart/form-data">
-    <input type="file" name="file">
-    <input type="submit" value="Upload CSV">
-</form>
+    <div id="wrapper">
+        <!-- LOADING -->
+        <div id="loading" class="hidden">
+            <p>Processing, please wait...</p>
+        </div>
 
-<!-- Text Input Form -->
-<form action="/" method="post">
-    <input type="text" name="text_input" placeholder="Enter text for sentiment analysis">
-    <input type="submit" value="Analyze Text">
-</form>
+        <!-- HEADER -->
+        <header id="adjustMargin">
+            <div id="getHeight" class="title">
+                <h1><a href="/">Mood Sleuth</a></h1>
+                <p>a sentiment analysis tool</p>
+            </div>
+            <div class="content">
+                <div class="inner" id="squish">
+                    <p>input text below for analysis.</p>
 
-<!-- Display text analysis result -->
-{% if input_text %}
-<h2>Result</h2>
-<p>Input Text: {{ input_text }}</p>
-<p>This text appears to be {{ predicted_rating_text }}.</p>
-{% endif %}
+                    <!-- TEXT INPUT -->
+                    <form id="textForm" action="/" method="post">
+                        <textarea name="text_input" rows="4"></textarea>
+                        <input type="submit" value="Analyze Text">
+                    </form>
 
-<!-- Display CSV analysis results -->
-{% if avg_sentiment %}
-<h2>CSV Analysis Summary</h2>
-<p>This file contains mostly {{ avg_sentiment }} reviews.</p>
-<p>Here's a positive review: {{ example_positive_review }}</p>
-<p>And here's a negative one: {{ example_negative_review }}</p>
-<p>For a detailed report, please download and review the following csv:</p>
+                    <!-- text input results -->
+                    <div id="textResult" class="results hidden">
+                        {% if input_text %}
+                        <h2>Result</h2>
+                        <p>Input Text: {{ input_text }}</p>
+                        <p>This text appears to be {{ predicted_rating_text }}.</p>
+                        {% endif %}
+                    </div>
 
-<!-- Download CSV button -->
-<form action="/download_predictions" method="post">
-    <input type="hidden" name="predictions_csv" value="{{ predictions_csv }}">
-    <input type="submit" value="Download Predictions CSV">
-</form>
-{% endif %}
+                    <p style="margin-bottom:2rem; font-size: 1.25rem; font-style: italic;">or</p>
+                    <p>upload a CSV file wherein the first column contains texts for bulk analysis.</p>
+
+                    <!-- FILE UPLOAD -->
+                    <form id="fileForm" class="bottom" action="/" method="post" enctype="multipart/form-data">
+                        <div class="upload">
+                            <input type="file" name="file">
+                            <input type="submit" value="Upload CSV">
+                        </div>
+                    </form>
+
+                    <!-- CSV results -->
+                    <div id="csvResult" class="results bottom hidden">
+                        <!-- CSV summary -->
+                        <h2>Result</h2>
+                        {% if avg_sentiment %}
+                        <p>This file contains mostly {{ avg_sentiment }} reviews.</p>
+                        <p>Here's a positive review: {{ example_positive_review }}</p>
+                        <p>And here's a negative one: {{ example_negative_review }}</p>
+                        <p>For a detailed report, please download and review the following csv:</p>
+
+                        <!-- CSV download -->
+                        <form action="/download_predictions" method="post">
+                            <input type="hidden" name="predictions_csv" value="{{ predictions_csv }}">
+                            <input type="submit" value="Download Predictions CSV">
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p class="copyright">&copy; 2024 Dmitry Dohy for WGU. Background from <a href="https://www.vecteezy.com/free-videos/abstract">Vecteezy</a>.</p>
+    </footer>
+
+    <!-- BG -->
+    <div id="bg"></div>
+
+    <!-- SCRIPTS -->
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+    <script src="{{ url_for('static', filename='AJAX.js') }}"></script>
+
 </body>
 </html>

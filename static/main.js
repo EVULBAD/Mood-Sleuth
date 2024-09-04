@@ -1,4 +1,6 @@
-window.onload = adjustMarginBottom("getHeight", "adjustMargin")
+addEventListener("load", (event) => {
+    adjustMarginBottom("getHeight", "adjustMargin")
+});
 addEventListener("resize", (event) => {adjustMarginBottom("getHeight", "adjustMargin")});
 
 function getHeight(id) {
