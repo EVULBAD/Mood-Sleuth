@@ -3,9 +3,8 @@ import os
 import joblib
 import random
 
-from flask import Flask, render_template, request, jsonify, send_file, after_this_request
+from flask import Flask, render_template, request, jsonify, send_file
 from datetime import datetime
-from io import BytesIO
 from sentiment_analysis import preprocess, rating_to_sentiment
 
 # Load the model and vectorizer.
@@ -52,9 +51,9 @@ def home():
                 df['Preprocessed'] = df['Review'].apply(preprocess)
                 X_vec = vectorizer.transform(df['Preprocessed'])
                 df['Rating'] = logreg_model.predict(X_vec)
+                df['Sentiment'] = df['Rating'].apply(rating_to_sentiment)
                 mean_predicted_rating = df['Rating'].mean()
                 avg_sentiment = rating_to_sentiment(round(mean_predicted_rating))
-                sentiment_analysis_report = df[['Review', 'Rating']].to_csv(index=False)
 
                 # Generate unique filename using current time and a random 2 digits.
                 dt = datetime.now()
@@ -65,8 +64,10 @@ def home():
                 output_name = 'mood_sleuth_' + dt + rand + '.csv'
                 global_variables['output_file'] = output_name
 
+                # Turn dataframe into CSV for downloading.
+                sentiment_analysis_report = df[['Review', 'Rating', 'Sentiment']].to_csv(index=False)
                 sentiment_analysis_report_path = os.path.join(app.config['TEMP_FOLDER'], output_name)
-                df[['Review', 'Rating']].to_csv(sentiment_analysis_report_path, index=False)
+                df[['Review', 'Rating', 'Sentiment']].to_csv(sentiment_analysis_report_path, index=False)
 
                 # Delete file after processing.
                 os.remove(file_path)
@@ -100,7 +101,7 @@ def download_temp():
     if os.path.exists(output_path):
         return send_file(output_path, as_attachment=True)
     else:
-        return "File not found", 404
+        return "Error: File not found.", 404
 
 if __name__ == '__main__':
     app.run(debug=True)

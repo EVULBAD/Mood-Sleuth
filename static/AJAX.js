@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <h2>Result</h2>
                 <p>This file contains a majority of <span style="border-bottom: dotted 2px ${span_color}">${data.avg_sentiment}</span> reviews.</p>
                 <form class="bottom" action="/download_temp" method="get">
-                    <input type="submit" value="Download Full Report">
+                    <input class="button big" type="submit" value="Download Full Report">
                 </form>
             `;
             csvResult.classList.remove('hidden');

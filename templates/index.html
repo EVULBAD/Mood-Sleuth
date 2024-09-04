@@ -23,7 +23,7 @@
             <!-- HEADER -->
             <header id="adjustMargin">
                 <div id="getHeight" class="title">
-                    <h1><a href="/">Mood Sleuth</a></h1>
+                    <h1><a href="/">Mood Sleuth,</a></h1>
                     <p>a sentiment analysis tool.</p>
                 </div>
                 <div class="content">
@@ -33,7 +33,7 @@
                         <!-- TEXT INPUT -->
                         <form id="textForm" action="/" method="post">
                             <textarea name="text_input" rows="4"></textarea>
-                            <input type="submit" value="Analyze Text">
+                            <input class="button" type="submit" value="Analyze">
                         </form>
 
                         <!-- text input results -->
@@ -46,8 +46,11 @@
                         <!-- FILE UPLOAD -->
                         <form id="fileForm" class="bottom" action="/" method="post" enctype="multipart/form-data">
                             <div class="upload">
-                                <input type="file" name="file">
-                                <input type="submit" value="Upload CSV">
+                                <label for="CSV-upload" class="file-upload">
+                                    Upload CSV
+                                </label>
+                                <input id="CSV-upload" type="file" name="file">
+                                <input class="button" type="submit" value="Analyze">
                             </div>
                         </form>
 
@@ -62,7 +65,7 @@
 
         <!-- FOOTER -->
         <footer>
-            <p class="copyright">&copy; 2024 Dmitry Dohy for WGU. Background from <a href="https://www.vecteezy.com/free-videos/abstract">Vecteezy</a>.</p>
+            <p class="copyright">&copy; 2024 Dmitry Dohy. Background from <a href="https://www.vecteezy.com/free-videos/abstract">Vecteezy</a>.</p>
         </footer>
 
         <!-- BG -->
