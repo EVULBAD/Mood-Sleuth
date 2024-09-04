@@ -72,6 +72,7 @@ h1, h2, h3, h4 {
     letter-spacing: 0.5rem;
     font-family: "Righteous", sans-serif;
     font-weight: 900;
+    margin-bottom: 1rem;
 }
 
 h1 {
@@ -84,6 +85,10 @@ h1 a {
 
 h1 a:hover {
     font-style: italic;
+}
+
+.title > h1 {
+    margin-bottom: 0!important
 }
 
 a {
@@ -208,20 +213,22 @@ footer {
 }
 
 .hidden {
-    transition: max-height 0.5s ease, padding  0.5s ease, opacity 0.5s ease, margin-bottom  0.5s ease, margin-top 0.5s ease;
+    transition: max-height 0.75s ease, padding  0.75s ease, opacity 0.3s ease, margin-bottom  0.75s ease, margin-top 0.75s ease, font-size .2s ease;
     max-height: 0!important;
     padding: 0!important;
     opacity: 0!important;
     margin-bottom: 0!important;
     margin-top: 0!important;
+    font-size:0.001rem;
 }
 
 .show {
-    transition: max-height 0.5s ease, padding  0.5s ease, opacity 0.5s ease, margin-bottom  0.5s ease, margin-top 0.5s ease;
+    transition: max-height 0.75s ease, padding  0.75s ease, opacity 0.3s ease, margin-bottom  0.75s ease, margin-top 0.75s ease, font-size .2s ease;
     max-height: 1000px;
     padding: 1rem;
     opacity: 1;
     margin-bottom: 2rem;
+    font-size:1rem;
 }
 
 .bottom.show {
@@ -231,6 +238,16 @@ footer {
 .results {
     border: dotted 2px white;
     background: rgba(2,0,41,0.5);
+}
+
+#loading {
+    position: absolute;
+    z-index: 9999;
+    padding: 1rem;
+    background: rgba(2,0,41,0.5);
+    font-size: 2rem;
+    border: dotted 2px white;
+    font-style: italic;
 }
 
 /* MOBILE */
