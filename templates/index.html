@@ -1,79 +1,81 @@
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <title>Mood Sleuth</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
-    </head>
-    <body class="is-preload">
+<head>
+    <title>Mood Sleuth</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+</head>
+<body class="is-preload">
 
-        <div class="pagecover"></div>
-        <div class="bgcover"></div>
-        <video autoplay muted loop id="videobg">
-            <source src="{{ url_for('static', filename='background.mp4') }}" type="video/mp4">
-        </video>
+<div class="pagecover"></div>
+<div class="bgcover"></div>
+<video autoplay muted loop id="videobg">
+    <source src="{{ url_for('static', filename='background.mp4') }}" type="video/mp4">
+</video>
 
-        <div id="wrapper">
-            <!-- LOADING -->
-            <div id="loading" class="hidden">
-                <p>Processing, please wait...</p>
+<div id="wrapper">
+    <!-- LOADING -->
+    <div class="loadcontainer" >
+        <div id="loading" class="innerloading hidden">
+            <p style="margin-bottom: 0.5rem;">Processing...</p>
+            <div class="container">
+                <div class="loader"></div>
             </div>
-
-            <!-- HEADER -->
-            <header id="adjustMargin">
-                <div id="getHeight" class="title">
-                    <h1><a href="/">Mood Sleuth,</a></h1>
-                    <p>a sentiment analysis tool.</p>
-                </div>
-                <div class="content">
-                    <div class="inner" id="squish">
-                        <p>Input text below for analysis.</p>
-
-                        <!-- TEXT INPUT -->
-                        <form id="textForm" action="/" method="post">
-                            <textarea name="text_input" rows="4"></textarea>
-                            <input class="button" type="submit" value="Analyze">
-                        </form>
-
-                        <!-- text input results -->
-                        <div id="textResult" class="results hidden">
-                        </div>
-
-                        <p style="margin-bottom:2rem; font-size: 1.25rem; font-style: italic;">OR</p>
-                        <p>Upload a CSV file wherein the first column contains texts for bulk analysis.</p>
-
-                        <!-- FILE UPLOAD -->
-                        <form id="fileForm" class="bottom" action="/" method="post" enctype="multipart/form-data">
-                            <div class="upload">
-                                <label for="CSV-upload" class="file-upload">
-                                    Upload CSV
-                                </label>
-                                <input id="CSV-upload" type="file" name="file">
-                                <input class="button" type="submit" value="Analyze">
-                            </div>
-                        </form>
-
-                        <!-- CSV results -->
-                        <div id="csvResult" class="results bottom hidden">
-                            <!-- CSV summary -->
-                        </div>
-                    </div>
-                </div>
-            </header>
         </div>
+    </div>
 
-        <!-- FOOTER -->
-        <footer>
-            <p class="copyright">&copy; 2024 Dmitry Dohy. Background from <a href="https://www.vecteezy.com/free-videos/abstract">Vecteezy</a>.</p>
-        </footer>
+    <!-- HEADER -->
+    <header id="adjustMargin">
+        <div id="getHeight" class="title">
+            <h1><a href="/mood-sleuth">Mood Sleuth,</a></h1>
+            <p>a sentiment analysis tool.</p>
+        </div>
+        <div class="content">
+            <div class="inner">
+                <p>Input text below for analysis.</p>
 
-        <!-- BG -->
-        <div id="bg"></div>
+                <!-- TEXT INPUT -->
+                <form id="textForm" action="/" method="post">
+                    <textarea name="text_input" rows="4"></textarea>
+                    <input class="button" type="submit" value="Analyze">
+                </form>
 
-        <!-- SCRIPTS -->
-        <script src="{{ url_for('static', filename='main.js') }}"></script>
-        <script src="{{ url_for('static', filename='AJAX.js') }}"></script>
+                <div id="textResult" class="results hidden">
+                    <!-- text input results -->
+                </div>
 
-    </body>
+                <p style="margin-bottom:1rem; font-size: 1.25rem; font-style: italic;">OR</p>
+                <p>Upload a CSV file wherein the first column contains texts for bulk analysis.</p>
+
+                <!-- CSV UPLOAD -->
+                <form id="fileForm" class="bottom" action="/" method="post" enctype="multipart/form-data">
+                    <div class="upload">
+                        <label for="CSV-upload" class="file-upload button">
+                            Upload CSV
+                        </label>
+                        <input id="CSV-upload" type="file" name="file">
+                        <input class="button" type="submit" value="Analyze">
+                    </div>
+                </form>
+
+                <div id="csvResult" class="results bottom hidden">
+                    <!-- CSV results -->
+                </div>
+            </div>
+        </div>
+    </header>
+</div>
+
+<!-- FOOTER -->
+<footer id="footer">
+    <p class="copyright">&copy; 2024 Dmitry Dohy. Background from <a href="https://www.vecteezy.com/free-videos/abstract">Vecteezy</a>.</p>
+</footer>
+
+
+<!-- SCRIPTS -->
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+<script src="{{ url_for('static', filename='AJAX.js') }}"></script>
+
+</body>
 </html>

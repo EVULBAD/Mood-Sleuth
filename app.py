@@ -2,6 +2,7 @@ import pandas as pd
 import os
 import joblib
 import random
+import time
 
 from flask import Flask, render_template, request, jsonify, send_file
 from datetime import datetime
@@ -13,7 +14,7 @@ vectorizer = joblib.load('vectorizer.joblib')
 
 # Definitions.
 UPLOAD_FOLDER = 'uploads'
-TEMP_FOLDER = 'temp'
+TEMP_FOLDER = 'tmp'
 ALLOWED_EXTENSIONS = {'csv'}
 global_variables = {}
 
@@ -61,7 +62,7 @@ def home():
                 rand = random.random()
                 rand = round(rand * 100)
                 rand = str(rand)
-                output_name = 'mood_sleuth_' + dt + rand + '.csv'
+                output_name = 'mood-sleuth_' + dt + rand + '.csv'
                 global_variables['output_file'] = output_name
 
                 # Turn dataframe into CSV for downloading.
@@ -71,6 +72,11 @@ def home():
 
                 # Delete file after processing.
                 os.remove(file_path)
+
+                # Polling mechanism to ensure the file is available.
+                while not os.path.exists(sentiment_analysis_report_path):
+                    time.sleep(1)
+                time.sleep(3)
 
                 return jsonify({
                     'avg_sentiment': avg_sentiment,
@@ -83,7 +89,7 @@ def home():
             input_text = request.form['text_input']
             preprocessed_text = preprocess(input_text)
             input_vector = vectorizer.transform([preprocessed_text])
-            predicted_rating_int = int(logreg_model.predict(input_vector)[0])  # Convert to native int
+            predicted_rating_int = int(logreg_model.predict(input_vector)[0])
             predicted_rating_text = rating_to_sentiment(predicted_rating_int)
 
             return jsonify({
@@ -104,4 +110,4 @@ def download_temp():
         return "Error: File not found.", 404
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
