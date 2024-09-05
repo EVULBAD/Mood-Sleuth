@@ -18,15 +18,17 @@ html, body, div, span, h1, h2, h3, h4, h5, h6, p, a {
     padding: 0;
     border: 0;
     color: white;
-    vertical-align: baseline;
 }
 
-video, .bgcover, .pagecover {
+video, .bgcover {
     position: fixed;
     right: 0;
     bottom: 0;
     overflow: hidden;
-    min-height: 100%;
+    min-height: 100vh;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
 }
 
 video {
@@ -40,18 +42,6 @@ video {
     min-height: 100vh;
     z-index: 2;
     opacity: 0.9;
-}
-
-.pagecover {
-    background: rgba(2,0,41,1);
-    min-width: 100vw;
-    min-height: 100vh;
-    z-index: 4;
-    animation: fadeOut ease 2s;
-    animation-delay: 0.2s;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-    pointer-events: none
 }
 
 @keyframes fadeOut {
@@ -101,8 +91,8 @@ h1 a:hover {
 
 .button, .file-upload {
     width: 12rem;
-    transition: background .5s ease;
     background: #dd6643;
+    transition: background .5s ease;
     border: none;
     font-size: 0.75rem;
     padding: 0.75rem 2rem;
@@ -112,11 +102,17 @@ h1 a:hover {
     font-family: "Righteous", sans-serif;
     letter-spacing: 0.2rem;
     color: white;
+    text-wrap: wrap;
 }
 
-.button:hover, .file-upload:hover {
+.button:hover, .inactive:hover, .file-upload:hover {
     transition: background .5s ease;
     background: none;
+}
+
+.inactive {
+    transition: background .5s ease;
+    background: rgba(2,0,41,0.5);
 }
 
 .button.big {
@@ -142,7 +138,7 @@ a:hover {
 #wrapper {
     position: fixed;
     bottom: 0;
-    width: 100%;
+    width: 100vw;
     display: -moz-flex;
     display: -webkit-flex;
     display: -ms-flex;
@@ -159,9 +155,7 @@ a:hover {
     -webkit-justify-content: space-between;
     -ms-justify-content: space-between;
     justify-content: space-between;
-    /* position: relative; */
     min-height: 100vh;
-    padding: 4rem 2rem;
     z-index: 3;
 }
 
@@ -202,12 +196,11 @@ header .content {
 
 .inner {
     padding: 3rem 10rem;
-    max-width: 70rem;
-    overflow: hidden;
+    max-width: 90vw;
 }
 
 form {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .bottom {
@@ -268,18 +261,53 @@ footer {
     background: rgba(2,0,41,0.5);
 }
 
-#loading {
+.loadcontainer {
     position: absolute;
+}
+
+#loading {
     z-index: 9999;
-    padding: 1rem;
+    padding: 1rem 5rem;
     background: rgba(2,0,41,0.5);
-    font-size: 2rem;
+    font-size: 1.5rem;
     border: dotted 2px white;
     font-style: italic;
 }
 
+.container {
+    width: 100%;
+    display:flex;
+    justify-content: center;
+}
+
+.loader {
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 8px solid;
+    border-color: white transparent;
+    animation: l1 1s infinite;
+}
+
+@keyframes l1 {to{transform: rotate(.5turn)}}
+
 /* MOBILE */
 @media screen and (max-width: 779px) {
+    body {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: row;
+    }
+
+    #wrapper {
+        align-items: flex-start;
+        flex-direction: row;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
     header .content .inner {
         padding: 2rem 1rem;
     }
@@ -293,4 +321,8 @@ footer {
         max-width: 100%;
     }
 
+    .button, .file-upload {
+        font-size: 0.6rem;
+        font-weight: normal;
+    }
 }

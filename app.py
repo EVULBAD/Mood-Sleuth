@@ -1,11 +1,11 @@
+from flask import Flask, render_template, request, jsonify, send_file
+from datetime import datetime
+from sentiment_analysis import preprocess, rating_to_sentiment
+
 import pandas as pd
 import os
 import joblib
 import random
-
-from flask import Flask, render_template, request, jsonify, send_file
-from datetime import datetime
-from sentiment_analysis import preprocess, rating_to_sentiment
 
 # Load the model and vectorizer.
 logreg_model = joblib.load('sentiment_model.joblib')
@@ -13,7 +13,7 @@ vectorizer = joblib.load('vectorizer.joblib')
 
 # Definitions.
 UPLOAD_FOLDER = 'uploads'
-TEMP_FOLDER = 'temp'
+TEMP_FOLDER = 'tmp'
 ALLOWED_EXTENSIONS = {'csv'}
 global_variables = {}
 
@@ -104,4 +104,5 @@ def download_temp():
         return "Error: File not found.", 404
 
 if __name__ == '__main__':
+    app.config['DEBUG'] = True
     app.run(debug=True)

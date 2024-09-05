@@ -3,12 +3,10 @@
     <head>
         <title>Mood Sleuth</title>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
     </head>
     <body class="is-preload">
-
-        <div class="pagecover"></div>
         <div class="bgcover"></div>
         <video autoplay muted loop id="videobg">
             <source src="{{ url_for('static', filename='background.mp4') }}" type="video/mp4">
@@ -16,8 +14,13 @@
 
         <div id="wrapper">
             <!-- LOADING -->
-            <div id="loading" class="hidden">
-                <p>Processing, please wait...</p>
+            <div class="loadcontainer">
+                <div id="loading" class="hidden">
+                    <p style="margin-bottom: 0.5rem;">Processing...</p>
+                    <div class="container">
+                        <div class="loader"></div>
+                    </div>
+                </div>
             </div>
 
             <!-- HEADER -->
@@ -38,9 +41,10 @@
 
                         <!-- text input results -->
                         <div id="textResult" class="results hidden">
+                            <!-- results -->
                         </div>
 
-                        <p style="margin-bottom:2rem; font-size: 1.25rem; font-style: italic;">OR</p>
+                        <p style="margin-bottom:1rem; font-size: 1.25rem; font-style: italic;">OR</p>
                         <p>Upload a CSV file wherein the first column contains texts for bulk analysis.</p>
 
                         <!-- FILE UPLOAD -->
@@ -56,7 +60,7 @@
 
                         <!-- CSV results -->
                         <div id="csvResult" class="results bottom hidden">
-                            <!-- CSV summary -->
+                            <!-- results -->
                         </div>
                     </div>
                 </div>

@@ -4,26 +4,28 @@ document.addEventListener('DOMContentLoaded', function() {
     const textResult = document.getElementById('textResult');
     const csvResult = document.getElementById('csvResult');
     const loadingDiv = document.getElementById('loading');
+    let span_color;
 
     function pickColor(avgSentiment) {
+        let color;
         if (avgSentiment === 'negative') {
-            span_color = "#ff002f"
+            color = "#ff002f"
         } else if (avgSentiment === 'mostly negative') {
-            span_color = "#ff51e9"
+            color = "#ff51e9"
         } else if (avgSentiment === 'neutral') {
-            span_color = "#2941ff"
+            color = "#2941ff"
         } else if (avgSentiment === 'mostly positive') {
-            span_color = "#00C3FF"
+            color = "#00C3FF"
         } else {
-            span_color = "#00FF2C"
+            color = "#00FF2C"
         }
 
-        return span_color
+        return color
     }
 
     function handleResponse(data) {
         if (data.input_text) {
-            span = pickColor(data.predicted_rating_text)
+            span_color = pickColor(data.predicted_rating_text)
             textResult.innerHTML = `
                 <h2>Result</h2>
                 <p>This text is <span style="border-bottom: dotted 2px ${span_color}">${data.predicted_rating_text}</span>.</p>
@@ -33,16 +35,16 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 textResult.classList.remove('show');
                 textResult.classList.add('hidden');
-            }, 7000);
+            }, 10000);
         }
 
         if (data.avg_sentiment) {
-            span = pickColor(data.avg_sentiment)
+            span_color = pickColor(data.avg_sentiment)
             csvResult.innerHTML = `
                 <h2>Result</h2>
                 <p>This file contains a majority of <span style="border-bottom: dotted 2px ${span_color}">${data.avg_sentiment}</span> reviews.</p>
                 <form class="bottom" action="/download_temp" method="get">
-                    <input class="button big" type="submit" value="Download Full Report">
+                    <input class="button big" type="submit" value="Download Report">
                 </form>
             `;
             csvResult.classList.remove('hidden');
