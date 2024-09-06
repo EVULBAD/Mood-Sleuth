@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 textResult.classList.remove('show');
                 textResult.classList.add('hidden');
-            }, 7000);
+            }, 10000);
         }
 
         if (data.avg_sentiment) {
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <h2>Result</h2>
                 <p>This file contains a majority of <span style="border-bottom: dotted 2px ${span_color}">${data.avg_sentiment}</span> reviews.</p>
                 <form class="bottom" action="/download_temp" method="get">
-                    <input class="button big" type="submit" value="Download Full Report">
+                    <input class="button big" type="submit" value="Download Report">
                 </form>
             `;
             csvResult.classList.remove('hidden');
