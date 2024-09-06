@@ -73,13 +73,16 @@ for i in range(10):
 print("Accuracy:", accuracy_score(y_test, y_pred))
 print("Classification Report:\n", classification_report(y_test, y_pred, target_names=['Negative', 'Mostly Negative', 'Neutral', 'Mostly Positive', 'Positive']))
 
+# Visualizations.
+# 1. Confusion matrix.
 import seaborn as sns
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 
-# Compute confusion matrix
+# Compute confusion matrix.
 cm = confusion_matrix(y_test, y_pred)
 
+# Create confusion matrix.
 plt.figure(figsize=(10, 7))
 sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=['1', '2', '3', '4', '5'], yticklabels=['1', '2', '3', '4', '5'])
 plt.xlabel('Predicted Ratings')
@@ -87,12 +90,14 @@ plt.ylabel('Actual Ratings')
 plt.title('Confusion Matrix')
 plt.show()
 
+# 2. Prediction error scatter plot.
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Compute errors
+# Compute errors.
 errors = np.abs(y_pred - y_test)
 
+# Create scatter plot.
 plt.figure(figsize=(10, 6))
 plt.scatter(range(len(errors)), errors, alpha=0.5)
 plt.yticks([0, 1, 2, 3, 4])
@@ -102,15 +107,47 @@ plt.title('Prediction Errors')
 plt.grid(True)
 plt.show()
 
-plt.figure(figsize=(10, 6))
-plt.hist(errors, bins=range(1, 6), edgecolor='black')
-plt.xticks([1, 2, 3, 4, 5])
-plt.xlabel('Absolute Error')
-plt.ylabel('Frequency')
-plt.title('Histogram of Prediction Errors')
-plt.grid(True)
-plt.show()
+# 3. Word cloud.
+from wordcloud import WordCloud, STOPWORDS
+import matplotlib.pyplot as plt
+
+# Create dictionary to map ratings to merged sentiment labels.
+sentiment_labels = {
+    1: 'Negative',      # Negative and Mostly Negative are merged
+    2: 'Negative',      # This maps Mostly Negative to Negative
+    3: 'Neutral',
+    4: 'Positive',      # Positive and Mostly Positive are merged
+    5: 'Positive'       # This maps Mostly Positive to Positive
+}
+
+# Create custom stopwords to avoid words that don't provide useful sentiment information.
+custom_stopwords = set(STOPWORDS)
+custom_stopwords.update([
+    "hotel", "room", "stay", "trip", "night", "rooms", "mcdonalds", "disney", "ride", "park", "day", "resort", "went", "time", "place", "check", "staff", "check-in", "checkin", "checkout", "facility", "booking", "reservation", "visit", "restaurant", "attraction", "experience", "city", "town", "area", "neighborhood", "people", "guests", "spot", "entry", "exit", "lobby", "bar", "kitchen", "table", "dish", "menu", "cuisine", "option", "choice", "event", "show", "performance", "exhibit", "display", "showcase", "presentation", "activity", "program", "schedule", "plan", "good", "disneyland", "great", "stayed", "really", "dont", "got", "wa", "kid", "food", "world", "make", "family", "looked", "need", "still", "shower", "two", "child", "one", "said", "say", "asked", "told", "hour", "minute", "hours", "minutes", "second", "desk", "thing", "go", "better", "u", "visited", "felt", "maybe", "arrived", "around", "pm", "am", "nice", "many", "get", "getting", "took", "way", "think", "take", "look", "looking", "return", "let", "saw", "paris", "place", "area", "location", "address", "unit", "number", "street", "avenue", "road", "lane", "drive", "square", "building", "floor", "room", "suite", "office", "block", "district", "region", "zone", "section", "part", "side", "corner", "item", "object", "thing", "aspect", "feature", "aspect", "detail", "image", "color", "style", "shape", "design", "appearance", "size", "dimension", "measure", "scale", "capacity", "volume", "quantity", "amount", "level", "stage", "phase", "context", "background", "information", "data", "input", "output", "result", "report", "summary", "overview", "analysis", "review", "comment", "feedback", "opinion", "perspective", "viewpoint", "judgment", "assessment", "evaluation", "note", "record", "entry", "detail", "description", "narrative", "account", "story", "event", "occurrence", "incident", "happening", "experience", "case", "example", "instance", "fact", "event", "situation", "lot", "small", "definitely", "quite", "bit", "use", "guest", "end", "thought", "called", "given", "first", "staying", "decided", "decide", "spent", "bathroom", "going", "checked", "week", "actually", "person", "husband", "wife", "main", "beautiful", "standard", "another", "entire", "half", "character", "hong", "kong", "know", "want", "new orleans", "overall", "little", "land", "used", "feel"
+])
+
+# Function to generate and display word cloud with stopwords.
+def generate_word_cloud(category, df):
+    all_text = " ".join(review for review in df['Preprocessed'])
+    wordcloud = WordCloud(width=800, height=400, background_color='white', stopwords=custom_stopwords).generate(all_text)
+
+    # Create word cloud.
+    plt.figure(figsize=(10, 6))
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis('off')  # Hide the axis
+    plt.title(f'{category} Word Cloud')
+    plt.show()
+
+# Map the ratings to the combined sentiment labels
+mapped_df = training_df.copy()
+mapped_df['Sentiment'] = mapped_df['Rating'].map(sentiment_labels)
+
+# Create separate word clouds for each combined sentiment category.
+for sentiment in ['Negative', 'Neutral', 'Positive']:
+    filtered_df = mapped_df[mapped_df['Sentiment'] == sentiment]
+    generate_word_cloud(sentiment, filtered_df)
+
 
 # Save model and vectorizer.
-joblib.dump(logreg_model, 'sentiment_model.joblib')
-joblib.dump(vectorizer, 'vectorizer.joblib')
+# joblib.dump(logreg_model, 'sentiment_model.joblib')
+# joblib.dump(vectorizer, 'vectorizer.joblib')
