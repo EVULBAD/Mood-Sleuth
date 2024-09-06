@@ -113,11 +113,11 @@ import matplotlib.pyplot as plt
 
 # Create dictionary to map ratings to merged sentiment labels.
 sentiment_labels = {
-    1: 'Negative',      # Negative and Mostly Negative are merged
-    2: 'Negative',      # This maps Mostly Negative to Negative
+    1: 'Negative',
+    2: 'Negative',
     3: 'Neutral',
-    4: 'Positive',      # Positive and Mostly Positive are merged
-    5: 'Positive'       # This maps Mostly Positive to Positive
+    4: 'Positive',
+    5: 'Positive'
 }
 
 # Create custom stopwords to avoid words that don't provide useful sentiment information.
@@ -147,7 +147,6 @@ for sentiment in ['Negative', 'Neutral', 'Positive']:
     filtered_df = mapped_df[mapped_df['Sentiment'] == sentiment]
     generate_word_cloud(sentiment, filtered_df)
 
-
 # Save model and vectorizer.
-# joblib.dump(logreg_model, 'sentiment_model.joblib')
-# joblib.dump(vectorizer, 'vectorizer.joblib')
+joblib.dump(logreg_model, 'sentiment_model.joblib')
+joblib.dump(vectorizer, 'vectorizer.joblib')
