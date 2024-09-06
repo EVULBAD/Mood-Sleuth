@@ -1,0 +1,366 @@
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&family=Righteous&display=swap');
+
+
+* {
+    box-sizing: inherit;
+}
+
+html {
+    box-sizing: border-box;
+    position: relative;
+    min-height: 100%;
+    
+}
+
+body {
+    font-family: "Red Hat Display", sans-serif;
+}
+
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, a {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    color: white;
+}
+
+video, .bgcover, .pagecover {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    min-height: 100vh;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+}
+
+video {
+    z-index: 1;
+}
+
+.bgcover {
+    background: rgb(2,0,41);
+    background: linear-gradient(0deg, rgba(2,0,41,1) 0%, rgba(255,255,255,0) 25%), linear-gradient(180deg, rgba(2,0,41,1) 0%, rgba(255,255,255,0) 25%);
+    min-width: 100vw;
+    min-height: 100vh;
+    z-index: 2;
+    opacity: 0.9;
+}
+
+.pagecover {
+    background: rgba(2,0,41,1);
+    min-width: 100vw;
+    min-height: 100vh;
+    z-index: 4;
+    animation: fadeOut ease 2s;
+    animation-delay: 0.2s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    pointer-events: none
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.title {
+    margin-bottom: 1rem;
+}
+
+h1, h2, h3, h4 {
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+    font-family: "Righteous", sans-serif;
+    font-weight: 900;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 4rem;
+}
+
+h1 a {
+    border: 0!important;
+}
+
+h1 a:hover {
+    font-style: italic;
+}
+
+.title > h1 {
+    margin-bottom: 0!important
+}
+
+.upload {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.button, .file-upload {
+    width: 12rem;
+    background: #dd6643;
+    transition: background .5s ease;
+    border: none;
+    font-size: 0.75rem;
+    padding: 0.75rem 2rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: "Righteous", sans-serif;
+    letter-spacing: 0.2rem;
+    color: white;
+    text-wrap: wrap;
+}
+
+.button:hover, .inactive:hover, .file-upload:hover {
+    transition: background .5s ease;
+    background: none;
+}
+
+.inactive {
+    transition: background .5s ease;
+    background: rgba(2,0,41,0.5);
+}
+
+.button.big {
+    width: 60%;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+a {
+    text-decoration: none;
+    border-bottom: dotted 2px white;
+    transition: border-bottom 0.2s;
+}
+
+a:hover {
+    text-decoration: none;
+    border-bottom: dotted 2px transparent;
+    transition: border-bottom 0.2s;
+}
+
+#wrapper {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    display: flex;
+    -moz-flex-direction: column;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -moz-align-items: center;
+    -webkit-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
+    -moz-justify-content: space-between;
+    -webkit-justify-content: space-between;
+    -ms-justify-content: space-between;
+    justify-content: space-between;
+    min-height: 100vh;
+    z-index: 3;
+}
+
+#wrapper:before, #wrapper:after {
+    content: '';
+    display: block;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index:998;
+    max-width: 100%;
+    text-align: center;
+    display: flex;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: -ms-flex;
+    flex-direction: column;
+    -moz-flex-direction: column;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    align-items: center;
+    -moz-align-items: center;
+    -webkit-align-items: center;
+    -ms-align-items: center;
+    max-width: 100%;
+    text-align: center;
+}
+
+header .content {
+    border: dotted 2px white;
+    max-width: 100%;
+    background: rgb(2,0,41);
+    background: radial-gradient(circle, rgba(2,0,41,0.5) 50%, rgba(255,255,255,0) 100%);
+}
+
+.inner {
+    padding: 3rem 10rem;
+    max-width: 90vw;
+}
+
+form {
+    margin-bottom: 1rem;
+}
+
+.bottom {
+    margin-bottom: 0!important;
+}
+
+input {
+    font-size: 1rem;
+}
+
+textarea {
+    height: 5rem;
+    resize: none;
+    display: block;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    max-width: 100%;
+}
+
+.inner p {
+    margin-bottom: 0.5rem;
+}
+
+footer {
+    position: absolute;
+    z-index: 999;
+    text-align: center;
+    width: 100%;
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+    bottom: 0;
+}
+
+.hidden {
+    transition: max-height 0.75s ease, padding  0.75s ease, opacity 0.3s ease, margin-bottom  0.75s ease, margin-top 0.75s ease, font-size .2s ease;
+    max-height: 0!important;
+    padding: 0!important;
+    opacity: 0!important;
+    margin-bottom: 0!important;
+    margin-top: 0!important;
+    font-size:0.001rem;
+}
+
+.show {
+    transition: max-height 0.75s ease, padding  0.75s ease, opacity 0.3s ease, margin-bottom  0.75s ease, margin-top 0.75s ease, font-size .2s ease;
+    max-height: 1000px;
+    padding: 1rem;
+    opacity: 1;
+    margin-bottom: 2rem;
+    font-size:1rem;
+}
+
+.bottom.show {
+    margin-top: 2rem;
+}
+
+.results {
+    border: dotted 2px white;
+    background: rgba(2,0,41,0.5);
+}
+
+.loadcontainer {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    pointer-events: none;
+    margin-bottom: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.innerloading {
+    padding: 1rem 5rem;
+    background: rgba(2,0,41,0.8);
+    font-size: 1.5rem;
+    border: dotted 2px white;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 0;
+}
+
+.loader {
+    transition: width 0.75 ease;
+    width: 50px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 8px solid;
+    border-color: white transparent;
+    animation: l1 1s infinite;
+}
+
+.loader.hidden {
+    transition: width 0.75s ease, border 0.75s ease;
+    width: 1px;
+    border: 1px solid;
+}
+
+@keyframes l1 {to{transform: rotate(.5turn)}}
+
+/* MOBILE */
+@media screen and (max-width:780px) {
+    h1 {
+        font-size: 2.8rem;
+    }
+    
+    header .content .inner {
+        padding: 2rem 1rem;
+    }
+    
+    .upload input[type=file] {
+        flex-grow: 1;
+        max-width: 100%;
+    }
+
+    .button, .file-upload {
+        font-size: 0.6rem;
+        font-weight: normal;
+    }
+}
+
+@media screen and (max-width: 780px), screen and (max-height: 680px) {
+    #wrapper {
+        align-items: flex-start;
+        flex-direction: row;
+        position: relative;
+        margin-top: 2rem;
+    }
+
+    video, .bgcover, .pagecover {
+        position: fixed;
+    }
+    
+    #wrapper, video {
+        min-height: auto;
+    }
+
+    header {
+        margin-bottom: 0!important;
+    }
+}

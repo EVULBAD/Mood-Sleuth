@@ -1,0 +1,3 @@
+[UID:2963][3337524] Child process with pid: 3338913 was killed by signal: 9, core dumped: no
+OSError: LSAPI: File error
+[UID:2963][3651634] Child process with pid: 3652539 was killed by signal: 9, core dumped: no
