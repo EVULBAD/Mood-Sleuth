@@ -12,15 +12,15 @@ _Note 2_: For CSV analysis, the first column of the CSV must be labeled "Review"
 
 _Positive_
 
-This lid is an outstanding piece of hardware. The lid snaps on SUPER TIGHT, in fact, I’d hate to try and pry it off. Tip: Put the lid on and turn the bucket over on a hard surface. Press on the bottom and it should snap on. The lid itself is robust enough to sit on, and seals the bucket easy. Takes up very little room of the original opening. This is really really really well made.
+  This lid is an outstanding piece of hardware. The lid snaps on SUPER TIGHT, in fact, I’d hate to try and pry it off. Tip: Put the lid on and turn the bucket over on a hard surface. Press on the bottom and it should snap on. The lid itself is robust enough to sit on, and seals the bucket easy. Takes up very little room of the original opening. This is really really really well made.
 
 _Neutral_
 
-Works as a flash drive, not much for maintenance or performance.
+  Works as a flash drive, not much for maintenance or performance.
 
 _Negative_
 
-The leg tubes don’t fit into the clamps to lock the bed when it’s open. It could fold up when the pet steps up onto it. I couldn’t submit my review without giving a star!
+  The leg tubes don’t fit into the clamps to lock the bed when it’s open. It could fold up when the pet steps up onto it. I couldn’t submit my review without giving a star!
 
 **Sample CSVs**
 
