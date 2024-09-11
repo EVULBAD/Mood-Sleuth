@@ -12,29 +12,29 @@ _Note 2_: For CSV analysis, the first column of the CSV must be labeled "Review"
 
 _Positive_
 
-  This lid is an outstanding piece of hardware. The lid snaps on SUPER TIGHT, in fact, I’d hate to try and pry it off. Tip: Put the lid on and turn the bucket over on a hard surface. Press on the bottom and it should snap on. The lid itself is robust enough to sit on, and seals the bucket easy. Takes up very little room of the original opening. This is really really really well made.
+&emsp;This lid is an outstanding piece of hardware. The lid snaps on SUPER TIGHT, in fact, I’d hate to try and pry it off. Tip: Put the lid on and turn the bucket over on a hard surface. Press on the bottom and it should snap on. The lid itself is robust enough to sit on, and seals the bucket easy. Takes up very little room of the original opening. This is really really really well made.
 
 _Neutral_
 
-  Works as a flash drive, not much for maintenance or performance.
+&emsp;Works as a flash drive, not much for maintenance or performance.
 
 _Negative_
 
-  The leg tubes don’t fit into the clamps to lock the bed when it’s open. It could fold up when the pet steps up onto it. I couldn’t submit my review without giving a star!
+&emsp;The leg tubes don’t fit into the clamps to lock the bed when it’s open. It could fold up when the pet steps up onto it. I couldn’t submit my review without giving a star!
 
 **Sample CSVs**
 
 Sample CSVs are included available in the repository's "Sample CSVs" directory. They were not used to train Mood Sleuth and do not contain ratings, intended only for testing analysis capabilities. "reviews_testing.csv" is intentionally short in order to decrease processing time while debugging, while the other CSVs are their full lengths to ensure the application can handle them.
 
 ### Guide
-1. Navigate to EVULBAD.com/mood-sleuth.\
+1. Navigate to EVULBAD.com/mood-sleuth.
 
 **Analyzing a text input:**
 
 2. In the text box, input your text to be analyzed (5 characters minimum).
 3. Click the "analyze" button immediately below the text box.
 4. The text input will be processed, then the analysis will reveal itself in a box labeled
-"result". This analysis will disappear after 10 seconds.\
+"result". This analysis will disappear after 10 seconds.
 
 **Analyzing a CSV:**
 
