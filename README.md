@@ -27,14 +27,14 @@ _Negative_
 Sample CSVs are included available in the repository's "Sample CSVs" directory. They were not used to train Mood Sleuth and do not contain ratings, intended only for testing analysis capabilities. "reviews_testing.csv" is intentionally short in order to decrease processing time while debugging, while the other CSVs are their full lengths to ensure the application can handle them.
 
 ### Guide
-1. Navigate to EVULBAD.com/mood-sleuth.
+1. Navigate to EVULBAD.com/mood-sleuth.\
 
 **Analyzing a text input:**
 
 2. In the text box, input your text to be analyzed (5 characters minimum).
 3. Click the "analyze" button immediately below the text box.
 4. The text input will be processed, then the analysis will reveal itself in a box labeled
-"result". This analysis will disappear after 10 seconds.
+"result". This analysis will disappear after 10 seconds.\
 
 **Analyzing a CSV:**
 
