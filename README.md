@@ -4,7 +4,7 @@ Mood Sleuth addresses the challenges of inefficiency and inaccuracy in manual se
 By offering both text input and CSV upload options, Mood Sleuth becomes a flexible, scalable solution for businesses of all sizes, allowing organizations to quickly analyze large sets of customer feedback – leading to faster, more informed decision-making. In an era where customer satisfaction is vital for competitive success, Mood Sleuth empowers businesses to stay responsive to their customers’ needs, driving improvements and fostering better customer relationships based on real-time feedback analysis.
 
 # User Guide
-_Note 1_: Mood Sleuth, having been trained on actual user-generated reviews, does best with inputs that reflect that. As such, copy reviews from ecommerce websites is the best way to see the most accurate results possible. Additionally, the application is less adept at categorizing text inputs containing few words and/or non-dictionary English (including typos, slang, emoticons, etc), so analyzing content with either of those factors present is not recommended.
+_Note 1_: Mood Sleuth, having been trained on actual user-generated reviews, does best with inputs that reflect that. As such, copied reviews from ecommerce websites is the best way to see the most accurate results possible. Additionally, the application is less adept at categorizing text inputs containing few words and/or non-dictionary English (including typos, slang, emoticons, etc), so analyzing content with either of those factors present is not recommended.
 
 _Note 2_: For CSV analysis, the first column of the CSV must be labeled "Review". Any columns aside from the "Review" column will be ignored.
 
