@@ -24,7 +24,7 @@ _Negative_
 
 **Sample CSVs**
 
-Sample CSVs are included available in the repository's "Sample CSVs" directory. They were not used to train Mood Sleuth and do not contain ratings, intended only for testing analysis capabilities. "reviews_testing.csv" is intentionally short in order to decrease processing time while debugging, while the other CSVs are their full lengths to ensure the application can handle them.
+Sample CSVs are available in the repository's "Sample CSVs" directory. They were not used to train Mood Sleuth and do not contain ratings, intended only for testing analysis capabilities. "reviews_testing.csv" is intentionally short in order to decrease processing time while debugging, while the other CSVs are their full lengths to ensure the application can handle them.
 
 ### Guide
 1. Navigate to EVULBAD.com/mood-sleuth.
