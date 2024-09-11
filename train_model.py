@@ -147,6 +147,26 @@ for sentiment in ['Negative', 'Neutral', 'Positive']:
     filtered_df = mapped_df[mapped_df['Sentiment'] == sentiment]
     generate_word_cloud(sentiment, filtered_df)
 
+# Calculate the percentage of predictions with absolute error 0, 1, or 2.
+total_predictions = len(errors)
+error_0 = np.sum(errors == 0)
+error_1 = np.sum(errors == 1)
+error_2 = np.sum(errors == 2)
+error_3 = np.sum(errors == 3)
+error_4 = np.sum(errors == 4)
+
+percent_error_0 = (error_0 / total_predictions) * 100
+percent_error_1 = (error_1 / total_predictions) * 100
+percent_error_2 = (error_2 / total_predictions) * 100
+percent_error_3 = (error_3 / total_predictions) * 100
+percent_error_4 = (error_4 / total_predictions) * 100
+
+print(f"Percentage of predictions with an error of 0 points: {percent_error_0:.2f}%")
+print(f"Percentage of predictions with an error of 1 point: {percent_error_1:.2f}%")
+print(f"Percentage of predictions with an error of 2 points: {percent_error_2:.2f}%")
+print(f"Percentage of predictions with an error of 3 points: {percent_error_3:.2f}%")
+print(f"Percentage of predictions with an error of 4 points: {percent_error_4:.2f}%")
+
 # Save model and vectorizer.
-joblib.dump(logreg_model, 'sentiment_model.joblib')
-joblib.dump(vectorizer, 'vectorizer.joblib')
+# joblib.dump(logreg_model, 'sentiment_model.joblib')
+# joblib.dump(vectorizer, 'vectorizer.joblib')
