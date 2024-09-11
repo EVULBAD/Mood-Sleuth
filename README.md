@@ -1,3 +1,5 @@
+![MOOD SLEUTH, a sentiment analysis tool.](https://i.imgur.com/8dJJ5Lr.png)
+
 # Summary
 Mood Sleuth addresses the challenges of inefficiency and inaccuracy in manual sentiment analysis of customer feedback, a task that can be overwhelming for organizations handling large volumes of data. By automating the sentiment analysis process, Mood Sleuth enables businesses to categorize customer reviews into easily interpretable categories; not only streamlining the review process, but also eliminating the potential for human error and bias. The application’s use of machine learning, particularly logistic regression, allows for accurate sentiment prediction based on patterns in language and word usage, ensuring businesses can trust the insights it provides.
 
